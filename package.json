@@ -1,0 +1,50 @@
+{
+  "name": "mailfence-playwright-automation",
+  "version": "1.0.0",
+  "description": "Enterprise-grade Playwright automation framework for Mailfence email workflow testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:ui": "npx playwright test --ui",
+    "test:debug": "npx playwright test --debug",
+    "test:report": "npx playwright show-report",
+    "test:trace": "npx playwright show-trace",
+    "install:browsers": "npx playwright install",
+    "install:deps": "npx playwright install --with-deps",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "testing",
+    "e2e",
+    "typescript",
+    "page-object-model",
+    "mailfence",
+    "email-testing"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/mailfence-playwright-automation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/mailfence-playwright-automation/issues"
+  },
+  "homepage": "https://github.com/yourusername/mailfence-playwright-automation#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.50.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
