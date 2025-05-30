@@ -1,4 +1,4 @@
-import { type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from "@playwright/test";
 
 export class ComposePage {
   readonly page: Page;
@@ -11,12 +11,14 @@ export class ComposePage {
 
   constructor(page: Page) {
     this.page = page;
-    this.newButton = page.getByTitle('New');
-    this.toField = page.getByRole('row', { name: 'To', exact: true }).getByRole('textbox');
-    this.subjectField = page.locator('#mailSubject');
-    this.attachmentButton = page.getByText('Attachment');
+    this.newButton = page.locator("#mailNewBtn");
+    this.toField = page
+      .getByRole("row", { name: "To", exact: true })
+      .getByRole("textbox");
+    this.subjectField = page.locator("#mailSubject");
+    this.attachmentButton = page.getByText("Attachment");
     this.fileInput = page.locator('input[type="file"]');
-    this.sendButton = page.getByText('Send');
+    this.sendButton = page.locator("#mailSend");
   }
 
   async openNewMessage() {

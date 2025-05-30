@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from "@playwright/test";
 
 export class TrashPage {
   readonly page: Page;
@@ -8,24 +8,23 @@ export class TrashPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.fileRowSelector = 'tr.trow';
-    this.deleteButton = page.getByText('Delete', { exact: true });
-    this.confirmButton = page.getByText('Yes');
+    this.fileRowSelector = "tr.trow";
+    this.deleteButton = page.getByText("Delete", { exact: true });
+    this.confirmButton = page.getByText("Yes");
   }
 
   async deleteFile(fileName: string) {
     const fileLocator = this.page.locator(this.fileRowSelector).filter({ hasText: fileName });
-    await expect(fileLocator).toBeVisible();
     await fileLocator.click();
-    
-    await expect(this.deleteButton).toBeVisible();
     await this.deleteButton.click();
-    
-    await expect(this.confirmButton).toBeVisible();
     await this.confirmButton.click();
   }
 
-  async verifyFileDeleted(fileName: string) {
-    await expect(this.page.getByText(fileName)).not.toBeVisible();
+  getFileLocator(fileName: string) {
+    return this.page.getByText(fileName);
+  }
+
+  getFileRowLocator(fileName: string) {
+    return this.page.locator(this.fileRowSelector).filter({ hasText: fileName });
   }
 }

@@ -1,0 +1,4 @@
+Found 1 file rows
+firstElementBox: { x: 200, y: 92, width: 780, height: 50.5 }
+secondElementBox: { x: 27, y: 86, width: 172, height: 29 }
+Drag and drop completed

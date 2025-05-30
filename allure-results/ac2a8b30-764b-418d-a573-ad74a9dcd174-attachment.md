@@ -1,0 +1,129 @@
+# Test info
+
+- Name: Mailfence Email Workflow >> should complete email attachment workflow with drag-drop
+- Location: C:\Users\Paata.Bugianishvili\Desktop\mailfence-playwright\tests\mailfence.spec.ts:58:7
+
+# Error details
+
+```
+Error: Timed out 5000ms waiting for expect(locator).toBeVisible()
+
+Locator: locator('#nav-mail div')
+Expected: visible
+Received: <element(s) not found>
+Call log:
+  - expect.toBeVisible with timeout 5000ms
+  - waiting for locator('#nav-mail div')
+
+    at MainPage.login (C:\Users\Paata.Bugianishvili\Desktop\mailfence-playwright\PageObjects\MainPage.ts:33:39)
+    at C:\Users\Paata.Bugianishvili\Desktop\mailfence-playwright\tests\mailfence.spec.ts:47:7
+```
+
+# Page snapshot
+
+```yaml
+- iframe
+- iframe
+- link:
+  - /url: "#home"
+- textbox
+- list:
+  - listitem: 
+  - listitem: 
+  - listitem: 
+  - listitem: 
+- list:
+  - listitem:
+    - textbox
+    - text:  
+  - listitem
+  - listitem:
+    - img
+  - listitem
+  - listitem:
+    - img
+    - text: Paata 
+  - listitem
+- text: Wednesday, 28 may My settings
+- link "IMAP, POP, SMTP, iPhone, Android, ....":
+  - /url: gwtdialog:https://mailfence.com/sw?type=account&nextpage=%2Fsupport%2Fmy_settings.jsp&width=800&height=600
+- text: "Account Username tttt Subscription free Order a subscription now! For only 3.5 EUR/month, you get :"
+- list:
+  - listitem: Much more storage
+  - listitem: The mf.me short domain
+  - listitem: Collaboration through Groups
+  - listitem: Access to your Messages via POP3/IMAP and SMTP
+  - listitem: Synchronization with smartphones and tablets
+  - listitem: Files online edition
+  - listitem: And many other features!
+- link "Change subscription":
+  - /url: javascript:;
+- text: "Recovery email address paatabugibugi@gmail.com Last connection 1:52 AM May 28, 2025 Georgia IP: 5.178.219.175"
+- link "Connections history":
+  - /url: javascript:;
+- table:
+  - rowgroup:
+    - row "News":
+      - cell "News"
+      - cell:
+        - list
+- text: Groups Groups allow for data sharing with other users. With groups, you use the full potential of Mailfence.
+- paragraph: "Sharing is done in two ways:"
+- list:
+  - listitem: "Each group has its own space: group Documents, group Calendar, etc. All group members may access this common space."
+  - listitem: Your private data can be shared with the group members. This is useful mostly for the Calendar.
+- text: "Belonging to a group has the following consequences:"
+- list:
+  - listitem: You can view the busy timeslots (but not the event details) in the group members Calendars
+  - listitem: You can send Documents to a group member drop folder.
+  - listitem: Of course, group members can do likewise.
+```
+
+# Test source
+
+```ts
+   1 | import { expect, type Locator, type Page } from '@playwright/test';
+   2 |
+   3 | export class MainPage {
+   4 |   readonly page: Page;
+   5 |   readonly loginButton: Locator;
+   6 |   readonly usernameInput: Locator;
+   7 |   readonly passwordInput: Locator;
+   8 |   readonly enterButton: Locator;
+   9 |   readonly mailNavigation: Locator;
+  10 |   readonly documentsNavigation: Locator;
+  11 |
+  12 |   constructor(page: Page) {
+  13 |     this.page = page;
+  14 |     this.loginButton = page.getByText('Log in');
+  15 |     this.usernameInput = page.getByRole('textbox', { name: 'Username or Primary email' });
+  16 |     this.passwordInput = page.getByRole('textbox', { name: 'Password' });
+  17 |     this.enterButton = page.getByRole('button', { name: 'Enter' });
+  18 |     this.mailNavigation = page.locator('#nav-mail div');
+  19 |     this.documentsNavigation = page.locator('#nav-docs div');
+  20 |   }
+  21 |
+  22 |   async goto() {
+  23 |     await this.page.goto('/');
+  24 |   }
+  25 |
+  26 |   async login(email: string, password: string) {
+  27 |     await this.loginButton.click();
+  28 |     await this.usernameInput.click();
+  29 |     await this.usernameInput.fill(email);
+  30 |     await this.passwordInput.click();
+  31 |     await this.passwordInput.fill(password);
+  32 |     await this.enterButton.click();
+> 33 |     await expect(this.mailNavigation).toBeVisible();
+     |                                       ^ Error: Timed out 5000ms waiting for expect(locator).toBeVisible()
+  34 |   }
+  35 |
+  36 |   async openMail() {
+  37 |     await this.mailNavigation.click();
+  38 |   }
+  39 |
+  40 |   async openDocuments() {
+  41 |     await this.documentsNavigation.click();
+  42 |   }
+  43 | }
+```

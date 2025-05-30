@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from "@playwright/test";
 
 export class DocumentsPage {
   readonly page: Page;
@@ -7,19 +7,16 @@ export class DocumentsPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.fileRowSelector = 'tr.trow';
-    this.trashFolder = page.locator('#doc_tree_trash');
+    this.fileRowSelector = "tr.trow";
+    this.trashFolder = page.locator("#doc_tree_trash");
   }
 
   async waitForDocumentsToLoad() {
-    await expect(this.page.locator(this.fileRowSelector).first()).toBeVisible();
-    await expect(this.trashFolder).toBeVisible();
-    await this.page.waitForTimeout(3000);
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async moveFileToTrash(fileName: string) {
     const fileElement = this.page.locator(this.fileRowSelector).filter({ hasText: fileName });
-    await expect(fileElement).toBeVisible();
 
     const count = await fileElement.count();
     console.log(`Found ${count} file rows`);
@@ -27,8 +24,8 @@ export class DocumentsPage {
     const firstElementBox = await fileElement.boundingBox();
     const secondElementBox = await this.trashFolder.boundingBox();
 
-    console.log('firstElementBox:', firstElementBox);
-    console.log('secondElementBox:', secondElementBox);
+    console.log("firstElementBox:", firstElementBox);
+    console.log("secondElementBox:", secondElementBox);
 
     if (firstElementBox && secondElementBox) {
       await this.page.mouse.move(
@@ -42,14 +39,13 @@ export class DocumentsPage {
         { steps: 5 }
       );
       await this.page.mouse.up();
-      console.log('Drag and drop completed');
+      console.log("Drag and drop completed");
     } else {
-      console.log('Could not get bounding boxes - elements not found or not visible');
+      console.log("Could not get bounding boxes - elements not found or not visible");
     }
   }
 
   async openTrash() {
-    await expect(this.trashFolder).toBeVisible();
     await this.trashFolder.click();
   }
 }
